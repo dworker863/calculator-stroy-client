@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { IService } from '../commonInterfaces/IServices';
+import { IService } from '../commonInterfaces/IService';
 
 export const instance = axios.create({
   baseURL: 'http://localhost:8000/',

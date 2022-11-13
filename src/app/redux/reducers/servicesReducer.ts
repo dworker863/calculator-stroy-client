@@ -1,7 +1,7 @@
 import { fetchServices, postService, patchService } from './../../api/api';
 import { AppThunk } from './../store';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IService } from '../../commonInterfaces/IServices';
+import { IService } from '../../commonInterfaces/IService';
 
 type TLoading = 'pending' | 'succeeded' | 'failed';
 
