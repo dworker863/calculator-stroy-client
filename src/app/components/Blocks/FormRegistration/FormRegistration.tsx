@@ -1,10 +1,11 @@
-import { ErrorMessage, Field, Form, Formik } from 'formik';
+import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
-import React from 'react';
+import React, { FC } from 'react';
 import { setRegistration } from '../../../redux/reducers/authReducer';
 import { useAppDispatch } from '../../../hooks';
+import { IFormRegistrationValues } from './IFormRegistration';
 
-const FormRegistration = () => {
+const FormRegistration: FC = () => {
   const dispatch = useAppDispatch();
 
   return (
@@ -25,7 +26,10 @@ const FormRegistration = () => {
           .required('Подтвердите пароль'),
         email: Yup.string().email('Введите корректный email').nullable(),
       })}
-      onSubmit={(values, { setSubmitting }) => {
+      onSubmit={(
+        values: IFormRegistrationValues,
+        { setSubmitting }: FormikHelpers<any>,
+      ) => {
         dispatch(setRegistration(values));
 
         setSubmitting(false);

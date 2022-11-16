@@ -1,10 +1,11 @@
-import React from 'react';
-import { Form, Formik, Field, ErrorMessage } from 'formik';
+import React, { FC } from 'react';
+import { Form, Formik, Field, ErrorMessage, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 import { useAppDispatch } from '../../../hooks';
 import { addService } from '../../../redux/reducers/servicesReducer';
+import { IFormServiceValues } from './IFormService';
 
-const FormService = () => {
+const FormService: FC = () => {
   const dispatch = useAppDispatch();
 
   return (
@@ -25,7 +26,10 @@ const FormService = () => {
         color: Yup.array().nullable(),
         price: Yup.string().required('Укажите цену'),
       })}
-      onSubmit={(values, { setSubmitting }) => {
+      onSubmit={(
+        values: IFormServiceValues,
+        { setSubmitting }: FormikHelpers<any>,
+      ) => {
         dispatch(addService(values));
         setSubmitting(false);
       }}
