@@ -59,9 +59,7 @@ export const login = (user: {
   return instance
     .post('auth/login', user)
     .then((res) => {
-      console.log(res.data);
-
-      localStorage.setItem('token', res.data.token);
+      localStorage.setItem('token', res.data.access_token);
       return res.data;
     })
     .catch((e) => {

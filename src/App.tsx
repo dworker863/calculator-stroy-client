@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import './App.css';
+import FormAuth from './app/components/Blocks/FormAuth/FormAuth';
 import FormRegistration from './app/components/Blocks/FormRegistration/FormRegistration';
 import FormService from './app/components/Blocks/FormService/FormService';
 import { useAppDispatch, useAppSelector } from './app/hooks';
@@ -23,8 +24,9 @@ function App() {
   return (
     <div className="App">
       {authError}
-      <FormRegistration />
+      {/* <FormRegistration /> */}
       {/* <FormService /> */}
+      <FormAuth />
     </div>
   );
 }
