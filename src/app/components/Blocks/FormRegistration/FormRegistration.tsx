@@ -1,8 +1,12 @@
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import React from 'react';
+import { setRegistration } from '../../../redux/reducers/authReducer';
+import { useAppDispatch } from '../../../hooks';
 
 const FormRegistration = () => {
+  const dispatch = useAppDispatch();
+
   return (
     <Formik
       initialValues={{
@@ -22,7 +26,7 @@ const FormRegistration = () => {
         email: Yup.string().email('Введите корректный email').nullable(),
       })}
       onSubmit={(values, { setSubmitting }) => {
-        console.log(values);
+        dispatch(setRegistration(values));
 
         setSubmitting(false);
       }}

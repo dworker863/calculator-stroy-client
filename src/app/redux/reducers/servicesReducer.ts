@@ -5,13 +5,13 @@ import { IService } from '../../commonInterfaces/IService';
 
 type TLoading = 'pending' | 'succeeded' | 'failed';
 
-export type TServiceState = {
+type TServiceState = {
   loading: TLoading;
   services: IService[];
   errorMessage: string;
 };
 
-export const initialState: TServiceState = {
+const initialState: TServiceState = {
   services: [],
   loading: 'succeeded',
   errorMessage: '',
@@ -36,29 +36,31 @@ const servicesSlice = createSlice({
   },
 });
 
-export const getServices = (): AppThunk => async (dispatch) => {
-  dispatch(setLoading('pending'));
-  const services = await fetchServices();
+export const getServices =
+  (): AppThunk =>
+  async (dispatch): Promise<void> => {
+    dispatch(setLoading('pending'));
+    const services = await fetchServices();
 
-  if (typeof services === 'string') {
-    dispatch(setLoading('failed'));
-    dispatch(setError(services));
-  }
+    if (typeof services === 'string') {
+      dispatch(setLoading('failed'));
+      dispatch(setError(services));
+    }
 
-  dispatch(setLoading('succeeded'));
-  dispatch(setServices(services));
-};
+    dispatch(setLoading('succeeded'));
+    dispatch(setServices(services));
+  };
 
 export const addService =
   (service: IService): AppThunk =>
-  async (dispatch) => {
+  async (dispatch): Promise<void> => {
     await postService(service);
     dispatch(getServices());
   };
 
 export const changeService =
   (fields: any): AppThunk =>
-  async (dispatch) => {
+  async (dispatch): Promise<void> => {
     await patchService(fields);
     dispatch(getServices());
   };

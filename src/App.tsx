@@ -9,6 +9,9 @@ function App() {
   const services = useAppSelector(
     ({ servicesReducer }) => servicesReducer.services,
   );
+  const authError = useAppSelector(
+    ({ authReducer }) => authReducer.errorMessage,
+  );
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -19,8 +22,9 @@ function App() {
 
   return (
     <div className="App">
-      <FormService />
+      {authError}
       <FormRegistration />
+      {/* <FormService /> */}
     </div>
   );
 }
