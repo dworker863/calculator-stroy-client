@@ -19,18 +19,28 @@ export const fetchServices = (): Promise<IService[]> => {
 
 export const postService = (service: IService): Promise<IService> => {
   return instance
-    .post('services', service)
+    .post('services', service, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    })
     .then((res) => {
       return res.data;
     })
     .catch((e) => {
+      console.log(e.response.data);
+
       return e.response.data.message;
     });
 };
 
 export const patchService = (fields: any) => {
   return instance
-    .patch('services', fields)
+    .patch('services', fields, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    })
     .then((res) => {
       return res.data;
     })
@@ -43,8 +53,6 @@ export const registration = (user: IUser): Promise<IUser> => {
   return instance
     .post('auth/registration', user)
     .then((res) => {
-      console.log(res);
-
       return res.data;
     })
     .catch((e) => {
@@ -59,7 +67,11 @@ export const login = (user: {
   return instance
     .post('auth/login', user)
     .then((res) => {
+      console.log(res.data);
+
       localStorage.setItem('token', res.data.access_token);
+      console.log(localStorage.getItem('token'));
+
       return res.data;
     })
     .catch((e) => {

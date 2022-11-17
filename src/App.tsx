@@ -7,8 +7,8 @@ import { useAppDispatch, useAppSelector } from './app/hooks';
 import { getServices } from './app/redux/reducers/servicesReducer';
 
 function App() {
-  const services = useAppSelector(
-    ({ servicesReducer }) => servicesReducer.services,
+  const { services, errorMessage } = useAppSelector(
+    ({ servicesReducer }) => servicesReducer,
   );
   const authError = useAppSelector(
     ({ authReducer }) => authReducer.errorMessage,
@@ -23,10 +23,11 @@ function App() {
 
   return (
     <div className="App">
+      <FormAuth />
       {authError}
       {/* <FormRegistration /> */}
-      {/* <FormService /> */}
-      <FormAuth />
+      <FormService />
+      {errorMessage}
     </div>
   );
 }

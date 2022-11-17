@@ -13,8 +13,8 @@ const FormService: FC = () => {
       initialValues={{
         name: '',
         measure: '',
-        material: null,
-        color: null,
+        material: [],
+        color: [],
         price: '',
       }}
       validationSchema={Yup.object({

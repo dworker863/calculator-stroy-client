@@ -54,14 +54,24 @@ export const getServices =
 export const addService =
   (service: IService): AppThunk =>
   async (dispatch): Promise<void> => {
-    await postService(service);
+    const stateService = await postService(service);
+
+    if (typeof stateService === 'string') {
+      dispatch(setError(stateService));
+    }
+
     dispatch(getServices());
   };
 
 export const changeService =
   (fields: any): AppThunk =>
   async (dispatch): Promise<void> => {
-    await patchService(fields);
+    const service = await patchService(fields);
+
+    if (typeof service === 'string') {
+      dispatch(setError(service));
+    }
+
     dispatch(getServices());
   };
 
