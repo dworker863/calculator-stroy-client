@@ -4,6 +4,7 @@ import React, { FC } from 'react';
 import * as Yup from 'yup';
 import { useAppDispatch } from '../../../hooks';
 import { setLogin } from '../../../redux/reducers/authReducer';
+import { StyledField } from '../../../commonStyles/StyledField';
 
 const FormAuth: FC = () => {
   const dispatch = useAppDispatch();
@@ -28,7 +29,8 @@ const FormAuth: FC = () => {
     >
       <Form>
         <label htmlFor="phoneNumber">Номер телефона</label>
-        <Field id="phoneNumber" type="text" name="phoneNumber" />
+        {/* <Field id="phoneNumber" type="text" name="phoneNumber" /> */}
+        <StyledField id="phoneNumber" type="text" name="phoneNumber" />
         <ErrorMessage name="phoneNumber" />
 
         <label htmlFor="password">Пароль</label>

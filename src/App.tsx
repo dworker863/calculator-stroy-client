@@ -1,4 +1,5 @@
-import './App.css';
+import { ThemeProvider } from 'styled-components';
+import { defaultTheme } from './app/commonStyles/theme';
 import FormAuth from './app/components/Blocks/FormAuth/FormAuth';
 import FormRegistration from './app/components/Blocks/FormRegistration/FormRegistration';
 import Services from './app/components/Pages/Services/Services';
@@ -10,12 +11,12 @@ function App() {
   );
 
   return (
-    <div className="App">
+    <ThemeProvider theme={defaultTheme}>
       <FormAuth />
       {authError}
       <Services />
       {/* <FormRegistration /> */}
-    </div>
+    </ThemeProvider>
   );
 }
 
