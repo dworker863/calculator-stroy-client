@@ -26,10 +26,10 @@ function App() {
       {services?.map((service) => (
         <div>{service.name}</div>
       ))}
-      {/* <FormAuth /> */}
+      <FormAuth />
       {authError}
       {/* <FormRegistration /> */}
-      <FormService />
+      {/* <FormService /> */}
       {errorMessage}
     </div>
   );

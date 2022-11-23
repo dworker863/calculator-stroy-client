@@ -6,6 +6,32 @@ export const instance = axios.create({
   baseURL: 'http://192.168.1.3:8000/',
 });
 
+export const registration = (user: IUser): Promise<IUser> => {
+  return instance
+    .post('auth/registration', user)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((e) => {
+      return e.response.data.message;
+    });
+};
+
+export const login = (user: {
+  phoneNumber: string;
+  password: string;
+}): Promise<IUser> => {
+  return instance
+    .post('auth/login', user)
+    .then((res) => {
+      localStorage.setItem('token', res.data.access_token);
+      return res.data;
+    })
+    .catch((e) => {
+      return e.response.data.message;
+    });
+};
+
 export const fetchServices = (): Promise<IService[]> => {
   return instance
     .get('services')
@@ -42,36 +68,6 @@ export const patchService = (fields: any) => {
       },
     })
     .then((res) => {
-      return res.data;
-    })
-    .catch((e) => {
-      return e.response.data.message;
-    });
-};
-
-export const registration = (user: IUser): Promise<IUser> => {
-  return instance
-    .post('auth/registration', user)
-    .then((res) => {
-      return res.data;
-    })
-    .catch((e) => {
-      return e.response.data.message;
-    });
-};
-
-export const login = (user: {
-  phoneNumber: string;
-  password: string;
-}): Promise<IUser> => {
-  return instance
-    .post('auth/login', user)
-    .then((res) => {
-      console.log(res.data);
-
-      localStorage.setItem('token', res.data.access_token);
-      console.log(localStorage.getItem('token'));
-
       return res.data;
     })
     .catch((e) => {

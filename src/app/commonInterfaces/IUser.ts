@@ -4,4 +4,5 @@ export interface IUser {
   password?: string;
   passwordConfirm?: string;
   email?: string | null;
+  role?: 'User' | 'Admin';
 }

@@ -10,6 +10,7 @@ type TAuthState = {
   phoneNumber: string;
   email?: string | null;
   errorMessage: string;
+  isAdmin: boolean;
 };
 
 const initialState: TAuthState = {
@@ -18,6 +19,7 @@ const initialState: TAuthState = {
   phoneNumber: '',
   email: '',
   errorMessage: '',
+  isAdmin: false,
 };
 
 const authSlice = createSlice({
@@ -31,6 +33,7 @@ const authSlice = createSlice({
         username: action.payload.username,
         phoneNumber: action.payload.phoneNumber,
         email: action.payload.email,
+        isAdmin: action.payload.role === 'Admin',
       };
     },
     setError: (state, action: PayloadAction<string>) => {
@@ -39,18 +42,6 @@ const authSlice = createSlice({
     },
   },
 });
-
-export const auth =
-  (user: { phoneNumber: string; password: string }): AppThunk =>
-  async (dispatch): Promise<void> => {
-    const stateUser = await login(user);
-
-    if (typeof stateUser === 'string') {
-      dispatch(setError(stateUser));
-    }
-
-    dispatch(setAuth(stateUser));
-  };
 
 export const setRegistration =
   (user: IUser): AppThunk =>
@@ -65,7 +56,9 @@ export const setRegistration =
 export const setLogin =
   (user: { phoneNumber: string; password: string }): AppThunk =>
   async (dispatch): Promise<void> => {
+    dispatch(setError(''));
     const stateUser = await login(user);
+    console.log(stateUser);
 
     if (typeof stateUser === 'string') {
       dispatch(setError(stateUser));
