@@ -3,7 +3,7 @@ import { IService } from '../commonInterfaces/IService';
 import { IUser } from '../commonInterfaces/IUser';
 
 export const instance = axios.create({
-  baseURL: 'http://192.168.1.5:8000/',
+  baseURL: 'http://192.168.1.3:8000/',
 });
 
 export const fetchServices = (): Promise<IService[]> => {

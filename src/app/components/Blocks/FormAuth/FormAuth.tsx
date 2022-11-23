@@ -18,7 +18,10 @@ const FormAuth: FC = () => {
         phoneNumber: Yup.string().required('Введите номер телефона'),
         password: Yup.string().required('Введите номер пароль'),
       })}
-      onSubmit={(values: IFormAuthValues, { setSubmitting }) => {
+      onSubmit={(
+        values: IFormAuthValues,
+        { setSubmitting }: FormikHelpers<IFormAuthValues>,
+      ) => {
         dispatch(setLogin(values));
         setSubmitting(false);
       }}

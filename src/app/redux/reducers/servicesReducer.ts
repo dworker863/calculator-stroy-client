@@ -54,9 +54,13 @@ export const getServices =
 export const addService =
   (service: IService): AppThunk =>
   async (dispatch): Promise<void> => {
+    console.log(localStorage.getItem('token'));
+
     const stateService = await postService(service);
 
     if (typeof stateService === 'string') {
+      console.log(11);
+
       dispatch(setError(stateService));
     }
 

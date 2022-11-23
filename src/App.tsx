@@ -23,7 +23,10 @@ function App() {
 
   return (
     <div className="App">
-      <FormAuth />
+      {services?.map((service) => (
+        <div>{service.name}</div>
+      ))}
+      {/* <FormAuth /> */}
       {authError}
       {/* <FormRegistration /> */}
       <FormService />
