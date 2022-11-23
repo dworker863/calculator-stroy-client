@@ -33,7 +33,7 @@ const authSlice = createSlice({
         username: action.payload.username,
         phoneNumber: action.payload.phoneNumber,
         email: action.payload.email,
-        isAdmin: action.payload.role === 'Admin',
+        isAdmin: action.payload.role === 'admin',
       };
     },
     setError: (state, action: PayloadAction<string>) => {
