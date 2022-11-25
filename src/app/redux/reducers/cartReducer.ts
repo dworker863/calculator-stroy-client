@@ -16,6 +16,14 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     setCartService: (state, action: PayloadAction<IService>) => {
+      if (
+        state.cartServices.some(
+          (service) => service?.name === action.payload.name,
+        )
+      ) {
+        return state;
+      }
+
       state.cartServices.push(action.payload);
       return state;
     },
@@ -23,7 +31,7 @@ const cartSlice = createSlice({
       return {
         ...state,
         sum: state.cartServices.reduce(
-          (sum, service) => (sum += service.price),
+          (sum, service) => (sum += service?.price),
           0,
         ),
       };
