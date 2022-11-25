@@ -27,6 +27,13 @@ const cartSlice = createSlice({
       state.cartServices.push(action.payload);
       return state;
     },
+    removeCartService: (state, action: PayloadAction<string>) => {
+      state.cartServices = state.cartServices.filter(
+        (service) => service.name !== action.payload,
+      );
+      return state;
+    },
+
     setSum: (state) => {
       return {
         ...state,
@@ -39,6 +46,6 @@ const cartSlice = createSlice({
   },
 });
 
-export const { setCartService, setSum } = cartSlice.actions;
+export const { setCartService, setSum, removeCartService } = cartSlice.actions;
 
 export const cartReducer = cartSlice.reducer;

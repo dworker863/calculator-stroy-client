@@ -1,6 +1,10 @@
 import React, { FC, useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { setCartService, setSum } from '../../../redux/reducers/cartReducer';
+import {
+  removeCartService,
+  setCartService,
+  setSum,
+} from '../../../redux/reducers/cartReducer';
 import { getServices } from '../../../redux/reducers/servicesReducer';
 import FormUserService from '../../Blocks/FormUserService/FormUserService';
 
@@ -23,12 +27,16 @@ const Services: FC = () => {
   }, [services]);
 
   const setCartServiceHandler = () => {
-    console.log(serviceName);
     dispatch(
       setCartService(
         services.filter((service) => service.name === serviceName)[0],
       ),
     );
+    dispatch(setSum());
+  };
+
+  const removeCartServiceHandler = (name: string) => {
+    dispatch(removeCartService(name));
     dispatch(setSum());
   };
 
@@ -51,7 +59,15 @@ const Services: FC = () => {
         </button>
       )}
       {cart.cartServices.map((service, index) => (
-        <FormUserService key={service.name + index} service={service} />
+        <div key={service.name + index}>
+          <FormUserService service={service} />
+          <button
+            type="button"
+            onClick={() => removeCartServiceHandler(service.name)}
+          >
+            X
+          </button>
+        </div>
       ))}
       <div>
         <span>Сумма: </span>
