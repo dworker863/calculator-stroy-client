@@ -5,13 +5,13 @@ import { IService } from '../../commonInterfaces/IService';
 
 type TLoading = 'pending' | 'succeeded' | 'failed';
 
-type TServiceState = {
+interface IServiceState {
   loading: TLoading;
   services: IService[];
   errorMessage: string;
-};
+}
 
-const initialState: TServiceState = {
+const initialState: IServiceState = {
   services: [],
   loading: 'succeeded',
   errorMessage: '',

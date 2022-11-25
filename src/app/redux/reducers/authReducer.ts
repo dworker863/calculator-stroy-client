@@ -4,16 +4,16 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IUser } from '../../commonInterfaces/IUser';
 import { login } from '../../api/api';
 
-type TAuthState = {
+interface IAuthState {
   auth: boolean;
   username: string;
   phoneNumber: string;
   email?: string | null;
   errorMessage: string;
   isAdmin: boolean;
-};
+}
 
-const initialState: TAuthState = {
+const initialState: IAuthState = {
   auth: false,
   username: '',
   phoneNumber: '',
