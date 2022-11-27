@@ -1,4 +1,5 @@
 import { ThemeProvider } from 'styled-components';
+import { StyledErrorMessage } from './app/commonStyles/StyledErrorMessage';
 import { defaultTheme } from './app/commonStyles/theme';
 import FormAuth from './app/components/Blocks/FormAuth/FormAuth';
 import FormRegistration from './app/components/Blocks/FormRegistration/FormRegistration';
@@ -13,9 +14,10 @@ function App() {
   return (
     <ThemeProvider theme={defaultTheme}>
       <FormAuth />
-      {authError}
+      <StyledErrorMessage>{authError}</StyledErrorMessage>
+
       <Services />
-      {/* <FormRegistration /> */}
+      <FormRegistration />
     </ThemeProvider>
   );
 }

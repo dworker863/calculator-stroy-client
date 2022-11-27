@@ -4,6 +4,10 @@ import React, { FC } from 'react';
 import { setRegistration } from '../../../redux/reducers/authReducer';
 import { useAppDispatch } from '../../../hooks';
 import { IFormRegistrationValues } from './IFormRegistration';
+import { StyledLabel } from '../../../commonStyles/StyledLabel';
+import { StyledField } from '../../../commonStyles/StyledField';
+import { StyledErrorMessage } from '../../../commonStyles/StyledErrorMessage';
+import { StyledButton } from '../../../commonStyles/StyledButton';
 
 const FormRegistration: FC = () => {
   const dispatch = useAppDispatch();
@@ -36,27 +40,41 @@ const FormRegistration: FC = () => {
       }}
     >
       <Form>
-        <label htmlFor="username">Имя пользователя</label>
-        <Field id="username" type="text" name="username" />
-        <ErrorMessage name="username" />
+        <StyledLabel htmlFor="username">Имя пользователя</StyledLabel>
+        <StyledField id="username" type="text" name="username" />
+        <ErrorMessage name="username">
+          {(msg) => <StyledErrorMessage>{msg}</StyledErrorMessage>}
+        </ErrorMessage>
 
-        <label htmlFor="phoneNumber">Номер телефона</label>
-        <Field id="phoneNumber" type="text" name="phoneNumber" />
-        <ErrorMessage name="phoneNumber" />
+        <StyledLabel htmlFor="phoneNumber">Номер телефона</StyledLabel>
+        <StyledField id="phoneNumber" type="text" name="phoneNumber" />
+        <ErrorMessage name="phoneNumber">
+          {(msg) => <StyledErrorMessage>{msg}</StyledErrorMessage>}
+        </ErrorMessage>
 
-        <label htmlFor="password">Пароль</label>
-        <Field id="password" type="password" name="password" />
-        <ErrorMessage name="password" />
+        <StyledLabel htmlFor="password">Пароль</StyledLabel>
+        <StyledField id="password" type="password" name="password" />
+        <ErrorMessage name="password">
+          {(msg) => <StyledErrorMessage>{msg}</StyledErrorMessage>}
+        </ErrorMessage>
 
-        <label htmlFor="passwordConfirm">Подтвердите пароль</label>
-        <Field id="passwordConfirm" type="password" name="passwordConfirm" />
-        <ErrorMessage name="passwordConfirm" />
+        <StyledLabel htmlFor="passwordConfirm">Подтвердите пароль</StyledLabel>
+        <StyledField
+          id="passwordConfirm"
+          type="password"
+          name="passwordConfirm"
+        />
+        <ErrorMessage name="passwordConfirm">
+          {(msg) => <StyledErrorMessage>{msg}</StyledErrorMessage>}
+        </ErrorMessage>
 
-        <label htmlFor="email">Email</label>
-        <Field id="email" type="text" name="email" />
-        <ErrorMessage name="email" />
+        <StyledLabel htmlFor="email">Email</StyledLabel>
+        <StyledField id="email" type="text" name="email" />
+        <ErrorMessage name="email">
+          {(msg) => <StyledErrorMessage>{msg}</StyledErrorMessage>}
+        </ErrorMessage>
 
-        <button type="submit">Зарегистрироваться</button>
+        <StyledButton type="submit">Зарегистрироваться</StyledButton>
       </Form>
     </Formik>
   );

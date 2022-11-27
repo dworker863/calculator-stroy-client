@@ -15,6 +15,10 @@ import {
 } from '../../../redux/reducers/servicesReducer';
 import { IService } from '../../../commonInterfaces/IService';
 import { IFormServiceState } from './IFormService';
+import { StyledLabel } from '../../../commonStyles/StyledLabel';
+import { StyledField } from '../../../commonStyles/StyledField';
+import { StyledErrorMessage } from '../../../commonStyles/StyledErrorMessage';
+import { StyledButton } from '../../../commonStyles/StyledButton';
 
 const FormService: FC<IFormServiceState> = ({ service, hideFormHandler }) => {
   const dispatch = useAppDispatch();
@@ -53,25 +57,33 @@ const FormService: FC<IFormServiceState> = ({ service, hideFormHandler }) => {
     >
       {({ values }) => (
         <Form>
-          <label htmlFor="name">Название услуги</label>
-          <Field id="name" type="text" name="name" />
-          <ErrorMessage name="name" />
+          <StyledLabel htmlFor="name">Название услуги</StyledLabel>
+          <StyledField id="name" type="text" name="name" />
+          <ErrorMessage name="name">
+            {(msg) => <StyledErrorMessage>{msg}</StyledErrorMessage>}
+          </ErrorMessage>
 
-          <label htmlFor="measure">Мера</label>
-          <Field id="measure" type="text" name="measure" />
-          <ErrorMessage name="measure" />
+          <StyledLabel htmlFor="measure">Мера</StyledLabel>
+          <StyledField id="measure" type="text" name="measure" />
+          <ErrorMessage name="measure">
+            {(msg) => <StyledErrorMessage>{msg}</StyledErrorMessage>}
+          </ErrorMessage>
           <FieldArray name="materials">
             {({ insert, remove, push }) => (
               <div>
                 {values.materials?.map((material, index) => (
                   <div key={index}>
-                    <label htmlFor={`materials.${index}`}>Материалы</label>
+                    <StyledLabel htmlFor={`materials.${index}`}>
+                      Материалы
+                    </StyledLabel>
                     <Field
                       id={`materials.${index}`}
                       type="text"
                       name={`materials.${index}`}
                     />
-                    <ErrorMessage name={`materials.${index}`} />
+                    <ErrorMessage name={`materials.${index}`}>
+                      {(msg) => <StyledErrorMessage>{msg}</StyledErrorMessage>}
+                    </ErrorMessage>
                     <button type="button" onClick={() => remove(index)}>
                       X
                     </button>
@@ -89,13 +101,15 @@ const FormService: FC<IFormServiceState> = ({ service, hideFormHandler }) => {
               <div>
                 {values.colors?.map((color, index) => (
                   <div key={index}>
-                    <label htmlFor={`colors.${index}`}>Цвета</label>
+                    <StyledLabel htmlFor={`colors.${index}`}>Цвета</StyledLabel>
                     <Field
                       id={`colors.${index}`}
                       type="text"
                       name={`colors.${index}`}
                     />
-                    <ErrorMessage name={`colors.${index}`} />
+                    <ErrorMessage name={`colors.${index}`}>
+                      {(msg) => <StyledErrorMessage>{msg}</StyledErrorMessage>}
+                    </ErrorMessage>
                     <button type="button" onClick={() => remove(index)}>
                       X
                     </button>
@@ -113,12 +127,14 @@ const FormService: FC<IFormServiceState> = ({ service, hideFormHandler }) => {
             )}
           </FieldArray>
 
-          <label htmlFor="price">Цена</label>
-          <Field id="price" type="text" name="price" />
-          <ErrorMessage name="price" />
-          <button type="submit">
+          <StyledLabel htmlFor="price">Цена</StyledLabel>
+          <StyledField id="price" type="text" name="price" />
+          <ErrorMessage name="price">
+            {(msg) => <StyledErrorMessage>{msg}</StyledErrorMessage>}
+          </ErrorMessage>
+          <StyledButton type="submit">
             {service ? 'Сохранить' : 'Добавить услугу'}
-          </button>
+          </StyledButton>
         </Form>
       )}
     </Formik>

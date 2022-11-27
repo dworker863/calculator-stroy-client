@@ -12,6 +12,8 @@ import {
 import { getServices } from '../../../redux/reducers/servicesReducer';
 import FormService from '../../Blocks/FormService/FormService';
 import FormUserService from '../../Blocks/FormUserService/FormUserService';
+import { StyledButton } from '../../../commonStyles/StyledButton';
+import { StyledSelect } from '../../../commonStyles/StyledSelect';
 
 const Services: FC = () => {
   const isAdmin = useAppSelector(({ authReducer }) => authReducer.isAdmin);
@@ -77,18 +79,22 @@ const Services: FC = () => {
 
   return (
     <div>
-      <select name="services" id="services" onChange={serviceSelectHandler}>
+      <StyledSelect
+        name="services"
+        id="services"
+        onChange={serviceSelectHandler}
+      >
         {services.map((service, index) => (
           <option key={service.name + index}>{service.name}</option>
         ))}
-      </select>
+      </StyledSelect>
       {isAdmin && (
-        <button type="button" onClick={changeServiceHandler}>
+        <StyledButton type="button" onClick={changeServiceHandler}>
           Изменить
-        </button>
+        </StyledButton>
       )}
       {isAdmin && (
-        <button
+        <StyledButton
           type="button"
           onClick={() =>
             deleteServiceHandler(
@@ -97,12 +103,12 @@ const Services: FC = () => {
           }
         >
           Удалить
-        </button>
+        </StyledButton>
       )}
       {isAdmin && (
-        <button type="button" onClick={addServiceHandler}>
+        <StyledButton type="button" onClick={addServiceHandler}>
           Добавить Услугу
-        </button>
+        </StyledButton>
       )}
       {showForm !== null && (
         <div>
@@ -110,26 +116,26 @@ const Services: FC = () => {
             service={services.filter((service) => service.name === showForm)[0]}
             hideFormHandler={hideFormHandler}
           />
-          <button type="button" onClick={hideFormHandler}>
+          <StyledButton type="button" onClick={hideFormHandler}>
             Отмена
-          </button>
+          </StyledButton>
         </div>
       )}
       {!isAdmin && (
-        <button type="button" onClick={setCartServiceHandler}>
+        <StyledButton type="button" onClick={setCartServiceHandler}>
           Выбрать услугу
-        </button>
+        </StyledButton>
       )}
       {!isAdmin &&
         cart.cartServices.map((service, index) => (
           <div key={service.name + index}>
             <FormUserService service={service} />
-            <button
+            <StyledButton
               type="button"
               onClick={() => removeCartServiceHandler(service.name)}
             >
               X
-            </button>
+            </StyledButton>
           </div>
         ))}
       {!isAdmin && (
