@@ -9,20 +9,24 @@ import {
 } from 'formik';
 import * as Yup from 'yup';
 import { useAppDispatch } from '../../../hooks';
-import { addService } from '../../../redux/reducers/servicesReducer';
+import {
+  addService,
+  changeService,
+} from '../../../redux/reducers/servicesReducer';
 import { IService } from '../../../commonInterfaces/IService';
+import { IFormServiceState } from './IFormService';
 
-const FormService: FC = () => {
+const FormService: FC<IFormServiceState> = ({ service }) => {
   const dispatch = useAppDispatch();
 
   return (
     <Formik
       initialValues={{
-        name: '',
-        measure: '',
-        materials: [''],
-        colors: [''],
-        price: 0,
+        name: service?.name || '',
+        measure: service?.measure || '',
+        materials: service?.materials || [''],
+        colors: service?.colors || [''],
+        price: service?.price || 0,
       }}
       validationSchema={Yup.object({
         name: Yup.string().required('Введите название услуги'),
@@ -36,9 +40,15 @@ const FormService: FC = () => {
       onSubmit={(values: IService, { setSubmitting }: FormikHelpers<any>) => {
         console.log(values);
 
-        dispatch(addService(values));
+        if (service) {
+          dispatch(changeService(service.id, values));
+        } else {
+          dispatch(addService(values));
+        }
+
         setSubmitting(false);
       }}
+      enableReinitialize
     >
       {({ values }) => (
         <Form>
@@ -105,7 +115,9 @@ const FormService: FC = () => {
           <label htmlFor="price">Цена</label>
           <Field id="price" type="text" name="price" />
           <ErrorMessage name="price" />
-          <button type="submit">Добавить услугу</button>
+          <button type="submit">
+            {service ? 'Сохранить' : 'Добавить услугу'}
+          </button>
         </Form>
       )}
     </Formik>

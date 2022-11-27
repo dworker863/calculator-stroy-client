@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { ChangeEvent, FC, useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import {
   removeCartService,
@@ -6,6 +6,7 @@ import {
   setSum,
 } from '../../../redux/reducers/cartReducer';
 import { getServices } from '../../../redux/reducers/servicesReducer';
+import FormService from '../../Blocks/FormService/FormService';
 import FormUserService from '../../Blocks/FormUserService/FormUserService';
 
 const Services: FC = () => {
@@ -17,6 +18,7 @@ const Services: FC = () => {
   const dispatch = useAppDispatch();
 
   const [serviceName, setServiceName] = useState('');
+  const [showForm, setShowForm] = useState('');
 
   useEffect(() => {
     dispatch(getServices());
@@ -40,39 +42,70 @@ const Services: FC = () => {
     dispatch(setSum());
   };
 
+  const changeServiceHandler = () => {
+    // console.log(showForm);
+    // console.log(111);
+
+    setShowForm(serviceName);
+  };
+
+  const serviceSelectHandler = (e: ChangeEvent<HTMLSelectElement>) => {
+    if (showForm) {
+      setServiceName(e.target.value);
+      setShowForm(e.target.value);
+      // console.log(e.target.value);
+      // console.log(showForm);
+    } else {
+      setServiceName(e.target.value);
+    }
+  };
+
   return (
     <div>
-      <select
-        name="services"
-        id="services"
-        onChange={(e) => setServiceName(e.target.value)}
-      >
+      <select name="services" id="services" onChange={serviceSelectHandler}>
         {services.map((service, index) => (
           <option key={service.name + index}>{service.name}</option>
         ))}
       </select>
-      {isAdmin && <button type="button">Изменить</button>}
+      {isAdmin && (
+        <button type="button" onClick={changeServiceHandler}>
+          Изменить
+        </button>
+      )}
       {isAdmin && <button type="button">Удалить</button>}
+      {showForm && (
+        <div>
+          <FormService
+            service={services.filter((service) => service.name === showForm)[0]}
+          />
+          <button type="button" onClick={() => setShowForm('')}>
+            Отмена
+          </button>
+        </div>
+      )}
       {!isAdmin && (
         <button type="button" onClick={setCartServiceHandler}>
           Выбрать услугу
         </button>
       )}
-      {cart.cartServices.map((service, index) => (
-        <div key={service.name + index}>
-          <FormUserService service={service} />
-          <button
-            type="button"
-            onClick={() => removeCartServiceHandler(service.name)}
-          >
-            X
-          </button>
+      {!isAdmin &&
+        cart.cartServices.map((service, index) => (
+          <div key={service.name + index}>
+            <FormUserService service={service} />
+            <button
+              type="button"
+              onClick={() => removeCartServiceHandler(service.name)}
+            >
+              X
+            </button>
+          </div>
+        ))}
+      {!isAdmin && (
+        <div>
+          <span>Сумма: </span>
+          <span>{cart.sum}</span>
         </div>
-      ))}
-      <div>
-        <span>Сумма: </span>
-        <span>{cart.sum}</span>
-      </div>
+      )}
     </div>
   );
 };

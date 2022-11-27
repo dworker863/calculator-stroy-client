@@ -60,9 +60,9 @@ export const postService = (service: IService): Promise<IService> => {
     });
 };
 
-export const patchService = (fields: any) => {
+export const patchService = (id: number | undefined, service: IService) => {
   return instance
-    .patch('services', fields, {
+    .patch(`services/${id}`, service, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
       },
