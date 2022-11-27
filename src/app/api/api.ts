@@ -74,3 +74,18 @@ export const patchService = (id: number | undefined, service: IService) => {
       return e.response.data.message;
     });
 };
+
+export const deleteService = (id: number | undefined) => {
+  return instance
+    .delete(`services/${id}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    })
+    .then((res) => {
+      return res.data;
+    })
+    .catch((e) => {
+      return e.response.data.message;
+    });
+};

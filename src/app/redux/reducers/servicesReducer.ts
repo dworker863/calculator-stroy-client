@@ -1,4 +1,9 @@
-import { fetchServices, postService, patchService } from './../../api/api';
+import {
+  fetchServices,
+  postService,
+  patchService,
+  deleteService,
+} from './../../api/api';
 import { AppThunk } from './../store';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IService } from '../../commonInterfaces/IService';
@@ -73,11 +78,27 @@ export const changeService =
     const stateService = await patchService(id, service);
 
     if (typeof stateService === 'string') {
+      console.log(stateService);
+
       dispatch(setError(stateService));
     }
 
     dispatch(getServices());
   };
+
+export const removeService =
+  (id: number | undefined): AppThunk =>
+  async (dispatch): Promise<void> => {
+    const response = await deleteService(id);
+
+    if (typeof response === 'string') {
+      dispatch(setError(response));
+    }
+
+    dispatch(getServices());
+  };
+{
+}
 
 export const { setServices, setLoading, setError } = servicesSlice.actions;
 

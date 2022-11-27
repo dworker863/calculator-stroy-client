@@ -1,6 +1,10 @@
 import React, { ChangeEvent, FC, useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import {
+  removeService,
+  setError,
+} from '../../../redux/reducers/servicesReducer';
+import {
   removeCartService,
   setCartService,
   setSum,
@@ -11,14 +15,14 @@ import FormUserService from '../../Blocks/FormUserService/FormUserService';
 
 const Services: FC = () => {
   const isAdmin = useAppSelector(({ authReducer }) => authReducer.isAdmin);
-  const services = useAppSelector(
-    ({ servicesReducer }) => servicesReducer.services,
+  const { services, errorMessage } = useAppSelector(
+    ({ servicesReducer }) => servicesReducer,
   );
   const cart = useAppSelector(({ cartReducer }) => cartReducer);
   const dispatch = useAppDispatch();
 
   const [serviceName, setServiceName] = useState('');
-  const [showForm, setShowForm] = useState('');
+  const [showForm, setShowForm] = useState<any>(null);
 
   useEffect(() => {
     dispatch(getServices());
@@ -44,6 +48,16 @@ const Services: FC = () => {
 
   const changeServiceHandler = () => {
     setShowForm(serviceName);
+    dispatch(setError(''));
+  };
+
+  const deleteServiceHandler = (id: number | undefined) => {
+    dispatch(removeService(id));
+    dispatch(setError(''));
+  };
+
+  const addServiceHandler = () => {
+    setShowForm('');
   };
 
   const serviceSelectHandler = (e: ChangeEvent<HTMLSelectElement>) => {
@@ -56,8 +70,10 @@ const Services: FC = () => {
   };
 
   const hideFormHandler = () => {
-    setShowForm('');
+    setShowForm(null);
   };
+
+  console.log(errorMessage);
 
   return (
     <div>
@@ -71,8 +87,24 @@ const Services: FC = () => {
           Изменить
         </button>
       )}
-      {isAdmin && <button type="button">Удалить</button>}
-      {showForm && (
+      {isAdmin && (
+        <button
+          type="button"
+          onClick={() =>
+            deleteServiceHandler(
+              services.filter((service) => service.name === serviceName)[0].id,
+            )
+          }
+        >
+          Удалить
+        </button>
+      )}
+      {isAdmin && (
+        <button type="button" onClick={addServiceHandler}>
+          Добавить Услугу
+        </button>
+      )}
+      {showForm !== null && (
         <div>
           <FormService
             service={services.filter((service) => service.name === showForm)[0]}
@@ -106,6 +138,7 @@ const Services: FC = () => {
           <span>{cart.sum}</span>
         </div>
       )}
+      {errorMessage && <div>{errorMessage}</div>}
     </div>
   );
 };

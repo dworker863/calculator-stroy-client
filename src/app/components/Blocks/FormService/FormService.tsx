@@ -42,11 +42,11 @@ const FormService: FC<IFormServiceState> = ({ service, hideFormHandler }) => {
 
         if (service) {
           dispatch(changeService(service.id, values));
-          hideFormHandler();
         } else {
           dispatch(addService(values));
         }
 
+        hideFormHandler();
         setSubmitting(false);
       }}
       enableReinitialize
