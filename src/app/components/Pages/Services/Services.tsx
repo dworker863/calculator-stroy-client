@@ -43,9 +43,6 @@ const Services: FC = () => {
   };
 
   const changeServiceHandler = () => {
-    // console.log(showForm);
-    // console.log(111);
-
     setShowForm(serviceName);
   };
 
@@ -53,11 +50,13 @@ const Services: FC = () => {
     if (showForm) {
       setServiceName(e.target.value);
       setShowForm(e.target.value);
-      // console.log(e.target.value);
-      // console.log(showForm);
     } else {
       setServiceName(e.target.value);
     }
+  };
+
+  const hideFormHandler = () => {
+    setShowForm('');
   };
 
   return (
@@ -77,8 +76,9 @@ const Services: FC = () => {
         <div>
           <FormService
             service={services.filter((service) => service.name === showForm)[0]}
+            hideFormHandler={hideFormHandler}
           />
-          <button type="button" onClick={() => setShowForm('')}>
+          <button type="button" onClick={hideFormHandler}>
             Отмена
           </button>
         </div>

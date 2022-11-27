@@ -16,7 +16,7 @@ import {
 import { IService } from '../../../commonInterfaces/IService';
 import { IFormServiceState } from './IFormService';
 
-const FormService: FC<IFormServiceState> = ({ service }) => {
+const FormService: FC<IFormServiceState> = ({ service, hideFormHandler }) => {
   const dispatch = useAppDispatch();
 
   return (
@@ -42,6 +42,7 @@ const FormService: FC<IFormServiceState> = ({ service }) => {
 
         if (service) {
           dispatch(changeService(service.id, values));
+          hideFormHandler();
         } else {
           dispatch(addService(values));
         }
