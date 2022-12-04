@@ -17,7 +17,7 @@ function App() {
       <StyledErrorMessage>{authError}</StyledErrorMessage>
 
       <Services />
-      <FormRegistration />
+      {/* <FormRegistration /> */}
     </ThemeProvider>
   );
 }

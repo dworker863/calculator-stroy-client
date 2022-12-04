@@ -12,13 +12,6 @@ const FormUserService: FC<IFormUserServiceState> = ({ service }) => {
           </option>
         ))}
       </select>
-      <select name="materials" id="materials">
-        {service.colors?.map((color, index) => (
-          <option key={color + index} value={color}>
-            {color}
-          </option>
-        ))}
-      </select>
       <span>{service.price}</span>
     </div>
   );

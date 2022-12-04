@@ -1,12 +1,5 @@
-import React, { FC, MouseEvent } from 'react';
-import {
-  Form,
-  Formik,
-  Field,
-  ErrorMessage,
-  FormikHelpers,
-  FieldArray,
-} from 'formik';
+import React, { FC } from 'react';
+import { Form, Formik, ErrorMessage, FormikHelpers, FieldArray } from 'formik';
 import * as Yup from 'yup';
 import { useAppDispatch } from '../../../hooks';
 import {
@@ -29,7 +22,6 @@ const FormService: FC<IFormServiceState> = ({ service, hideFormHandler }) => {
         name: service?.name || '',
         measure: service?.measure || '',
         materials: service?.materials || [''],
-        colors: service?.colors || [''],
         price: service?.price || 0,
       }}
       validationSchema={Yup.object({
@@ -38,7 +30,6 @@ const FormService: FC<IFormServiceState> = ({ service, hideFormHandler }) => {
           'Укажите меру за которую выставлена цена',
         ),
         materials: Yup.array().nullable(),
-        colors: Yup.array().of(Yup.string()).nullable(),
         price: Yup.number().required('Укажите цену'),
       })}
       onSubmit={(values: IService, { setSubmitting }: FormikHelpers<any>) => {
@@ -76,7 +67,7 @@ const FormService: FC<IFormServiceState> = ({ service, hideFormHandler }) => {
                     <StyledLabel htmlFor={`materials.${index}`}>
                       Материалы
                     </StyledLabel>
-                    <Field
+                    <StyledField
                       id={`materials.${index}`}
                       type="text"
                       name={`materials.${index}`}
@@ -84,43 +75,12 @@ const FormService: FC<IFormServiceState> = ({ service, hideFormHandler }) => {
                     <ErrorMessage name={`materials.${index}`}>
                       {(msg) => <StyledErrorMessage>{msg}</StyledErrorMessage>}
                     </ErrorMessage>
-                    <button type="button" onClick={() => remove(index)}>
+                    <StyledButton type="button" onClick={() => remove(index)}>
                       X
-                    </button>
-                    <button type="button" onClick={() => push('')}>
+                    </StyledButton>
+                    <StyledButton type="button" onClick={() => push('')}>
                       Добавить материал
-                    </button>
-                  </div>
-                ))}
-              </div>
-            )}
-          </FieldArray>
-
-          <FieldArray name="colors">
-            {({ insert, remove, push }) => (
-              <div>
-                {values.colors?.map((color, index) => (
-                  <div key={index}>
-                    <StyledLabel htmlFor={`colors.${index}`}>Цвета</StyledLabel>
-                    <Field
-                      id={`colors.${index}`}
-                      type="text"
-                      name={`colors.${index}`}
-                    />
-                    <ErrorMessage name={`colors.${index}`}>
-                      {(msg) => <StyledErrorMessage>{msg}</StyledErrorMessage>}
-                    </ErrorMessage>
-                    <button type="button" onClick={() => remove(index)}>
-                      X
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        push('');
-                      }}
-                    >
-                      Добавить цвет
-                    </button>
+                    </StyledButton>
                   </div>
                 ))}
               </div>

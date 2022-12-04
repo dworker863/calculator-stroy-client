@@ -1,9 +1,10 @@
 import axios from 'axios';
+import { IMaterial } from '../commonInterfaces/IMaterial';
 import { IService } from '../commonInterfaces/IService';
 import { IUser } from '../commonInterfaces/IUser';
 
 export const instance = axios.create({
-  baseURL: 'http://192.168.1.3:8000/',
+  baseURL: 'http://192.168.1.4:8000/',
 });
 
 export const registration = (user: IUser): Promise<IUser> => {
@@ -78,6 +79,62 @@ export const patchService = (id: number | undefined, service: IService) => {
 export const deleteService = (id: number | undefined) => {
   return instance
     .delete(`services/${id}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    })
+    .then((res) => {
+      return res.data;
+    })
+    .catch((e) => {
+      return e.response.data.message;
+    });
+};
+
+export const fetchMaterials = () => {
+  return instance
+    .get('materials')
+    .then((res) => {
+      return res.data;
+    })
+    .catch((e) => {
+      return e.response.data.message;
+    });
+};
+
+export const postMaterial = (material: IMaterial) => {
+  return instance
+    .post('materials', material, {
+      headers: {
+        Autorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    })
+    .then((res) => {
+      return res.data;
+    })
+    .catch((e) => {
+      return e.response.data.message;
+    });
+};
+
+export const patchMaterial = (id: number | undefined, material: IMaterial) => {
+  return instance
+    .patch(`materials/${id}`, material, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    })
+    .then((res) => {
+      return res.data;
+    })
+    .catch((e) => {
+      return e.response.date.message;
+    });
+};
+
+export const deleteMaterial = (id: number | undefined) => {
+  return instance
+    .delete(`materials/${id}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
       },

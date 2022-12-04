@@ -1,4 +1,4 @@
-import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik';
+import { ErrorMessage, Form, Formik, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 import React, { FC } from 'react';
 import { setRegistration } from '../../../redux/reducers/authReducer';

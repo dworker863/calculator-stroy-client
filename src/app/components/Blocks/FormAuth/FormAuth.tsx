@@ -26,13 +26,14 @@ const FormAuth: FC = () => {
         values: IFormAuthValues,
         { setSubmitting }: FormikHelpers<IFormAuthValues>,
       ) => {
+        console.log(11111);
+
         dispatch(setLogin(values));
         setSubmitting(false);
       }}
     >
       <Form>
         <StyledLabel htmlFor="phoneNumber">Номер телефона</StyledLabel>
-        {/* <Field id="phoneNumber" type="text" name="phoneNumber" /> */}
         <StyledField id="phoneNumber" type="text" name="phoneNumber" />
         <ErrorMessage name="phoneNumber">
           {(msg) => <StyledErrorMessage>{msg}</StyledErrorMessage>}
@@ -45,6 +46,7 @@ const FormAuth: FC = () => {
         </ErrorMessage>
 
         <StyledButton type="submit">Войти</StyledButton>
+        {/* <button type="submit">Войти</button> */}
       </Form>
     </Formik>
   );
