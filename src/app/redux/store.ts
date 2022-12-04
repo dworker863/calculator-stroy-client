@@ -1,3 +1,4 @@
+import { materialReducer } from './reducers/materialReducer';
 import { cartReducer } from './reducers/cartReducer';
 import { authReducer } from './reducers/authReducer';
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
@@ -6,6 +7,7 @@ import { servicesReducer } from './reducers/servicesReducer';
 export const store = configureStore({
   reducer: {
     servicesReducer,
+    materialReducer,
     authReducer,
     cartReducer,
   },

@@ -55,8 +55,6 @@ export const postService = (service: IService): Promise<IService> => {
       return res.data;
     })
     .catch((e) => {
-      console.log(e.response.data);
-
       return e.response.data.message;
     });
 };

@@ -2,7 +2,7 @@ import React, { ChangeEvent, FC, useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import {
   removeService,
-  setError,
+  setServicesError,
 } from '../../../redux/reducers/servicesReducer';
 import {
   removeCartService,
@@ -17,7 +17,7 @@ import { StyledSelect } from '../../../commonStyles/StyledSelect';
 
 const Services: FC = () => {
   const isAdmin = useAppSelector(({ authReducer }) => authReducer.isAdmin);
-  const { services, errorMessage } = useAppSelector(
+  const { services, serviceError } = useAppSelector(
     ({ servicesReducer }) => servicesReducer,
   );
   const cart = useAppSelector(({ cartReducer }) => cartReducer);
@@ -50,12 +50,12 @@ const Services: FC = () => {
 
   const changeServiceHandler = () => {
     setShowForm(serviceName);
-    dispatch(setError(''));
+    dispatch(setServicesError(''));
   };
 
   const deleteServiceHandler = (id: number | undefined) => {
     dispatch(removeService(id));
-    dispatch(setError(''));
+    dispatch(setServicesError(''));
   };
 
   const addServiceHandler = () => {
@@ -75,7 +75,7 @@ const Services: FC = () => {
     setShowForm(null);
   };
 
-  console.log(errorMessage);
+  console.log(serviceError);
 
   return (
     <div>
@@ -144,7 +144,7 @@ const Services: FC = () => {
           <span>{cart.sum}</span>
         </div>
       )}
-      {errorMessage && <div>{errorMessage}</div>}
+      {serviceError && <div>{serviceError}</div>}
     </div>
   );
 };

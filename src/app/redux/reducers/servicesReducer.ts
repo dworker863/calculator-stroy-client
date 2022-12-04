@@ -7,19 +7,18 @@ import {
 import { AppThunk } from './../store';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IService } from '../../commonInterfaces/IService';
-
-type TLoading = 'pending' | 'succeeded' | 'failed';
+import { TLoading } from '../../commonInterfaces/TLoading';
 
 interface IServiceState {
   loading: TLoading;
   services: IService[];
-  errorMessage: string;
+  serviceError: string;
 }
 
 const initialState: IServiceState = {
-  services: [],
   loading: 'succeeded',
-  errorMessage: '',
+  services: [],
+  serviceError: '',
 };
 
 const servicesSlice = createSlice({
@@ -30,12 +29,12 @@ const servicesSlice = createSlice({
       state.services = action.payload;
       return state;
     },
-    setLoading: (state, action: PayloadAction<TLoading>) => {
+    setServicesLoading: (state, action: PayloadAction<TLoading>) => {
       state.loading = action.payload;
       return state;
     },
-    setError: (state, action: PayloadAction<string>) => {
-      state.errorMessage = action.payload;
+    setServicesError: (state, action: PayloadAction<string>) => {
+      state.serviceError = action.payload;
       return state;
     },
   },
@@ -44,32 +43,28 @@ const servicesSlice = createSlice({
 export const getServices =
   (): AppThunk =>
   async (dispatch): Promise<void> => {
-    dispatch(setLoading('pending'));
+    dispatch(setServicesLoading('pending'));
     const services = await fetchServices();
 
     if (typeof services === 'string') {
-      dispatch(setLoading('failed'));
-      dispatch(setError(services));
+      dispatch(setServicesLoading('failed'));
+      dispatch(setServicesError(services));
+    } else {
+      dispatch(setServicesLoading('succeeded'));
+      dispatch(setServices(services));
     }
-
-    dispatch(setLoading('succeeded'));
-    dispatch(setServices(services));
   };
 
 export const addService =
   (service: IService): AppThunk =>
   async (dispatch): Promise<void> => {
-    console.log(localStorage.getItem('token'));
-
     const stateService = await postService(service);
 
     if (typeof stateService === 'string') {
-      console.log(11);
-
-      dispatch(setError(stateService));
+      dispatch(setServicesError(stateService));
+    } else {
+      dispatch(getServices());
     }
-
-    dispatch(getServices());
   };
 
 export const changeService =
@@ -78,12 +73,10 @@ export const changeService =
     const stateService = await patchService(id, service);
 
     if (typeof stateService === 'string') {
-      console.log(stateService);
-
-      dispatch(setError(stateService));
+      dispatch(setServicesError(stateService));
+    } else {
+      dispatch(getServices());
     }
-
-    dispatch(getServices());
   };
 
 export const removeService =
@@ -92,14 +85,15 @@ export const removeService =
     const response = await deleteService(id);
 
     if (typeof response === 'string') {
-      dispatch(setError(response));
+      dispatch(setServicesError(response));
+    } else {
+      dispatch(getServices());
     }
-
-    dispatch(getServices());
   };
 {
 }
 
-export const { setServices, setLoading, setError } = servicesSlice.actions;
+export const { setServices, setServicesLoading, setServicesError } =
+  servicesSlice.actions;
 
 export const servicesReducer = servicesSlice.reducer;
