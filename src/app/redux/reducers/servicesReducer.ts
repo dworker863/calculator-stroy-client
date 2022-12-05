@@ -90,8 +90,6 @@ export const removeService =
       dispatch(getServices());
     }
   };
-{
-}
 
 export const { setServices, setServicesLoading, setServicesError } =
   servicesSlice.actions;

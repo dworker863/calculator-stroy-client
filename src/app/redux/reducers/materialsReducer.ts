@@ -3,9 +3,9 @@ import {
   postMaterial,
   patchMaterial,
   deleteMaterial,
-} from './../../api/api';
-import { createSlice, PayloadAction, ThunkAction } from '@reduxjs/toolkit';
-import { TLoading } from './../../commonInterfaces/TLoading';
+} from '../../api/api';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { TLoading } from '../../commonInterfaces/TLoading';
 import { IMaterial } from '../../commonInterfaces/IMaterial';
 import { AppThunk } from '../store';
 
@@ -94,4 +94,4 @@ export const removeMaterial =
 export const { setMaterials, setMaterialsError, setMaterialsLoading } =
   materialsSlice.actions;
 
-export const materialReducer = materialsSlice.reducer;
+export const materialsReducer = materialsSlice.reducer;
