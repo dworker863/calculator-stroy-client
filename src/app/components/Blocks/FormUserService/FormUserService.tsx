@@ -1,19 +1,34 @@
 import React, { FC } from 'react';
+import { StyledSelect } from '../../../commonStyles/StyledSelect';
 import { IFormUserServiceState } from './IFormUserService';
+import {
+  StyledUserServiceMaterial,
+  StyledUserServiceTable,
+  StyledUserServiceTd,
+  StyledUserServiceTh,
+  StyledUserServiceTr,
+} from './StyledUserService';
 
 const FormUserService: FC<IFormUserServiceState> = ({ service }) => {
   return (
-    <div>
-      <span>{service.name}</span>
-      <select name="materials" id="materials">
-        {service.materials?.map((material, index) => (
-          <option key={material + index} value={material}>
-            {material}
-          </option>
-        ))}
-      </select>
-      <span>{service.price}</span>
-    </div>
+    <StyledUserServiceTable>
+      <StyledUserServiceTr>
+        <StyledUserServiceTh>Название</StyledUserServiceTh>
+        <StyledUserServiceTh>Материалы</StyledUserServiceTh>
+        <StyledUserServiceTh>Цена</StyledUserServiceTh>
+      </StyledUserServiceTr>
+      <StyledUserServiceTr>
+        <StyledUserServiceTd>{service.name}</StyledUserServiceTd>
+        <StyledUserServiceTd>
+          {service.materials?.map((material, index) => (
+            <StyledUserServiceMaterial key={material.name + index}>
+              {material.name}
+            </StyledUserServiceMaterial>
+          ))}
+        </StyledUserServiceTd>
+        <StyledUserServiceTd>{service.price}</StyledUserServiceTd>
+      </StyledUserServiceTr>
+    </StyledUserServiceTable>
   );
 };
 

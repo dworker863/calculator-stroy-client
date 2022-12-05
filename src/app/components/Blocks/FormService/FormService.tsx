@@ -21,7 +21,7 @@ const FormService: FC<IFormServiceState> = ({ service, hideFormHandler }) => {
       initialValues={{
         name: service?.name || '',
         measure: service?.measure || '',
-        materials: service?.materials || [''],
+        materials: service?.materials || [],
         price: service?.price || 0,
       }}
       validationSchema={Yup.object({

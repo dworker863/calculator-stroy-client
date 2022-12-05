@@ -1,7 +1,9 @@
+import { IMaterial } from './IMaterial';
+
 export interface IService {
   id?: number;
   name: string;
   measure: string;
-  materials?: string[] | null;
+  materials?: IMaterial[] | null;
   price: number;
 }
