@@ -1,25 +1,27 @@
 import styled from 'styled-components';
 
 export const StyledUserServiceTable = styled.table`
-  width: 300px;
+  /* min-width: max-content; */
   margin-bottom: 20px;
 `;
 
 export const StyledUserServiceTr = styled.tr``;
 
 export const StyledUserServiceTh = styled.th`
-  width: 100px;
+  min-width: max-content;
+  padding-right: 10px;
+  padding-left: 10px;
   text-align: center;
   font-weight: 400;
   line-height: 40px;
 
   &:first-child {
+    padding-left: 0;
     text-align: left;
   }
 `;
 
 export const StyledUserServiceTd = styled.td`
-  width: 100px;
   text-align: center;
 
   &:first-child {

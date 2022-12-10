@@ -4,23 +4,18 @@ import {
   removeService,
   setServicesError,
 } from '../../../redux/reducers/servicesReducer';
-import {
-  removeCartService,
-  setCartService,
-  setSum,
-} from '../../../redux/reducers/cartReducer';
+import { setCartService, setSum } from '../../../redux/reducers/cartReducer';
 import { getServices } from '../../../redux/reducers/servicesReducer';
 import FormService from '../../Blocks/FormService/FormService';
-import FormUserService from '../../Blocks/FormUserService/FormUserService';
 import { StyledButton } from '../../../commonStyles/StyledButton';
 import { StyledSelect } from '../../../commonStyles/StyledSelect';
+import Cart from '../../Blocks/Cart/Cart';
 
 const Services: FC = () => {
   const isAdmin = useAppSelector(({ authReducer }) => authReducer.isAdmin);
   const { services, serviceError } = useAppSelector(
     ({ servicesReducer }) => servicesReducer,
   );
-  const cart = useAppSelector(({ cartReducer }) => cartReducer);
   const dispatch = useAppDispatch();
 
   const [serviceName, setServiceName] = useState('');
@@ -40,11 +35,6 @@ const Services: FC = () => {
         services.filter((service) => service.name === serviceName)[0],
       ),
     );
-    dispatch(setSum());
-  };
-
-  const removeCartServiceHandler = (name: string) => {
-    dispatch(removeCartService(name));
     dispatch(setSum());
   };
 
@@ -74,8 +64,6 @@ const Services: FC = () => {
   const hideFormHandler = () => {
     setShowForm(null);
   };
-
-  console.log(serviceError);
 
   return (
     <div>
@@ -126,24 +114,7 @@ const Services: FC = () => {
           Выбрать услугу
         </StyledButton>
       )}
-      {!isAdmin &&
-        cart.cartServices.map((service, index) => (
-          <div key={service.name + index}>
-            <FormUserService service={service} />
-            <StyledButton
-              type="button"
-              onClick={() => removeCartServiceHandler(service.name)}
-            >
-              X
-            </StyledButton>
-          </div>
-        ))}
-      {!isAdmin && (
-        <div>
-          <span>Сумма: </span>
-          <span>{cart.sum}</span>
-        </div>
-      )}
+      {!isAdmin && <Cart />}
       {serviceError && <div>{serviceError}</div>}
     </div>
   );

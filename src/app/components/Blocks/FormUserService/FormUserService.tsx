@@ -15,7 +15,13 @@ const FormUserService: FC<IFormUserServiceState> = ({ service }) => {
       <StyledUserServiceTr>
         <StyledUserServiceTh>Название</StyledUserServiceTh>
         <StyledUserServiceTh>Материалы</StyledUserServiceTh>
-        <StyledUserServiceTh>Цена</StyledUserServiceTh>
+        <StyledUserServiceTh>Упаковка</StyledUserServiceTh>
+        <StyledUserServiceTh>Расход</StyledUserServiceTh>
+        <StyledUserServiceTh>Цена упаковки</StyledUserServiceTh>
+        <StyledUserServiceTh>Стоимость материалов</StyledUserServiceTh>
+        <StyledUserServiceTh>Стоимость услуги</StyledUserServiceTh>
+        <StyledUserServiceTh>Площадь</StyledUserServiceTh>
+        <StyledUserServiceTh>Общая стоимость</StyledUserServiceTh>
       </StyledUserServiceTr>
       <StyledUserServiceTr>
         <StyledUserServiceTd>{service.name}</StyledUserServiceTd>
@@ -26,8 +32,15 @@ const FormUserService: FC<IFormUserServiceState> = ({ service }) => {
             </StyledUserServiceMaterial>
           ))}
         </StyledUserServiceTd>
+        <StyledUserServiceTd></StyledUserServiceTd>
+        <StyledUserServiceTd></StyledUserServiceTd>
+        <StyledUserServiceTd></StyledUserServiceTd>
+        <StyledUserServiceTd></StyledUserServiceTd>
         <StyledUserServiceTd>{service.price}</StyledUserServiceTd>
+        <StyledUserServiceTd></StyledUserServiceTd>
+        <StyledUserServiceTd></StyledUserServiceTd>
       </StyledUserServiceTr>
+      <StyledUserServiceTr></StyledUserServiceTr>
     </StyledUserServiceTable>
   );
 };
