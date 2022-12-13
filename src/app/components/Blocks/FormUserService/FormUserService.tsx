@@ -1,5 +1,4 @@
 import React, { FC } from 'react';
-import { StyledSelect } from '../../../commonStyles/StyledSelect';
 import { IFormUserServiceState } from './IFormUserService';
 import {
   StyledUserServiceMaterial,

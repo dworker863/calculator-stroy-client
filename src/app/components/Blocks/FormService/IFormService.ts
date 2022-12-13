@@ -1,6 +1,6 @@
 import { IService } from './../../../commonInterfaces/IService';
 
 export interface IFormServiceState {
-  service?: IService;
+  service: IService | any;
   hideFormHandler: () => void;
 }

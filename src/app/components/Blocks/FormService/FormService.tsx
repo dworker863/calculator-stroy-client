@@ -12,6 +12,7 @@ import { StyledLabel } from '../../../commonStyles/StyledLabel';
 import { StyledField } from '../../../commonStyles/StyledField';
 import { StyledErrorMessage } from '../../../commonStyles/StyledErrorMessage';
 import { StyledButton } from '../../../commonStyles/StyledButton';
+import { IMaterial } from '../../../commonInterfaces/IMaterial';
 
 const FormService: FC<IFormServiceState> = ({ service, hideFormHandler }) => {
   const dispatch = useAppDispatch();
@@ -62,7 +63,7 @@ const FormService: FC<IFormServiceState> = ({ service, hideFormHandler }) => {
           <FieldArray name="materials">
             {({ insert, remove, push }) => (
               <div>
-                {values.materials?.map((material, index) => (
+                {values.materials?.map((material: IMaterial, index: number) => (
                   <div key={index}>
                     <StyledLabel htmlFor={`materials.${index}`}>
                       Материалы
