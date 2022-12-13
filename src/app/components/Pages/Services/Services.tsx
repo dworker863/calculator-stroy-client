@@ -1,9 +1,9 @@
 import React, { FC, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { setCartService, setSum } from '../../../redux/reducers/cartReducer';
 import { getServices } from '../../../redux/reducers/servicesReducer';
 import Cart from '../../Blocks/Cart/Cart';
 import AdminInstanceForm from '../../Blocks/AdminInstanceForm/AdminInstanceForm';
+import { getMaterials } from '../../../redux/reducers/materialsReducer';
 
 const Services: FC = () => {
   const isAdmin = useAppSelector(({ authReducer }) => authReducer.isAdmin);
@@ -18,27 +18,24 @@ const Services: FC = () => {
 
   useEffect(() => {
     dispatch(getServices());
+    dispatch(getMaterials());
   }, [dispatch]);
-
-  // const setCartServiceHandler = () => {
-  //   dispatch(
-  //     setCartService(
-  //       services.filter((service) => service.name === serviceName)[0],
-  //     ),
-  //   );
-  //   dispatch(setSum());
-  // };
 
   return (
     <div>
-      {isAdmin && <AdminInstanceForm instances={services} type="services" />}
-      {isAdmin && <AdminInstanceForm instances={materials} type="materials" />}
+      <AdminInstanceForm
+        isAdmin={isAdmin}
+        instances={services}
+        type="services"
+      />
+      {isAdmin && (
+        <AdminInstanceForm
+          isAdmin={isAdmin}
+          instances={materials}
+          type="materials"
+        />
+      )}
 
-      {/* {!isAdmin && (
-        <StyledButton type="button" onClick={setCartServiceHandler}>
-          Выбрать услугу
-        </StyledButton>
-      )} */}
       {!isAdmin && <Cart />}
       {serviceError && <div>{serviceError}</div>}
       {materialError && <div>{materialError}</div>}

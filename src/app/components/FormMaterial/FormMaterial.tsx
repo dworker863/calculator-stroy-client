@@ -13,8 +13,10 @@ import {
 } from '../../redux/reducers/materialsReducer';
 import { IMaterialState } from './IFormMaterial';
 
-const FormMaterial: FC<IMaterialState> = ({ material }) => {
+const FormMaterial: FC<IMaterialState> = ({ material, hideFormHandler }) => {
   const dispatch = useAppDispatch();
+
+  console.log(!!material);
 
   return (
     <div>
@@ -43,6 +45,7 @@ const FormMaterial: FC<IMaterialState> = ({ material }) => {
             dispatch(addMaterial(values));
           }
 
+          hideFormHandler();
           setSubmitting(false);
         }}
         enableReinitialize
@@ -69,7 +72,7 @@ const FormMaterial: FC<IMaterialState> = ({ material }) => {
             {(msg) => <StyledErrorMessage>{msg}</StyledErrorMessage>}
           </ErrorMessage>
           <StyledButton type="submit">
-            {material ? 'Сохранить' : 'Изменить'}
+            {material ? 'Изменить' : 'Сохранить'}
           </StyledButton>
         </Form>
       </Formik>

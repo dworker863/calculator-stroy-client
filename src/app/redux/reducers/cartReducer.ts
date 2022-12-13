@@ -15,7 +15,7 @@ const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
-    setCartService: (state, action: PayloadAction<IService>) => {
+    setCartService: (state, action: PayloadAction<IService | any>) => {
       if (
         state.cartServices.some(
           (service) => service?.name === action.payload.name,

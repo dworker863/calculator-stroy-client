@@ -2,6 +2,7 @@ import React, { ChangeEvent, FC, useEffect, useState } from 'react';
 import { StyledButton } from '../../../commonStyles/StyledButton';
 import { StyledSelect } from '../../../commonStyles/StyledSelect';
 import { useAppDispatch } from '../../../hooks';
+import { setCartService, setSum } from '../../../redux/reducers/cartReducer';
 import {
   removeService,
   setServicesError,
@@ -11,8 +12,9 @@ import FormService from '../FormService/FormService';
 import { IAdminInstanceFormState } from './IAdminInstanceForm';
 
 const AdminInstanceForm: FC<IAdminInstanceFormState> = ({
-  instances,
   type,
+  isAdmin,
+  instances,
 }) => {
   const dispatch = useAppDispatch();
 
@@ -49,6 +51,17 @@ const AdminInstanceForm: FC<IAdminInstanceFormState> = ({
     setShowForm(null);
   };
 
+  const setCartServiceHandler = () => {
+    if (type === 'services') {
+      dispatch(
+        setCartService(
+          instances.filter((instance) => instance.name === instanceName)[0],
+        ),
+      );
+    }
+    dispatch(setSum());
+  };
+
   console.log(instances[0]);
 
   return (
@@ -56,34 +69,40 @@ const AdminInstanceForm: FC<IAdminInstanceFormState> = ({
       {instances.length > 0 && (
         <div>
           <StyledSelect
-            name="services"
-            id="services"
+            name="instances"
+            id="instnaces"
             onChange={instanceSelectHandler}
           >
             {instances.map((instance, index) => (
               <option key={instance.name + index}>{instance.name}</option>
             ))}
           </StyledSelect>
-          <StyledButton type="button" onClick={changeInstanceHandler}>
-            Изменить
-          </StyledButton>
-          <StyledButton
-            type="button"
-            onClick={() =>
-              deleteServiceHandler(
-                instances.filter(
-                  (instance) => instance.name === instanceName,
-                )[0].id,
-              )
-            }
-          >
-            Удалить
-          </StyledButton>
+          {isAdmin && (
+            <div>
+              <StyledButton type="button" onClick={changeInstanceHandler}>
+                Изменить
+              </StyledButton>
+              <StyledButton
+                type="button"
+                onClick={() =>
+                  deleteServiceHandler(
+                    instances.filter(
+                      (instance) => instance.name === instanceName,
+                    )[0].id,
+                  )
+                }
+              >
+                Удалить
+              </StyledButton>
+            </div>
+          )}
         </div>
       )}
-      <StyledButton type="button" onClick={addInstanceHandler}>
-        {type === 'services' ? 'Добавить Услугу' : 'Добавить Материал'}
-      </StyledButton>
+      {isAdmin && (
+        <StyledButton type="button" onClick={addInstanceHandler}>
+          {type === 'services' ? 'Добавить Услугу' : 'Добавить Материал'}
+        </StyledButton>
+      )}
       {showForm !== null &&
         (type === 'services' ? (
           <div>
@@ -110,6 +129,11 @@ const AdminInstanceForm: FC<IAdminInstanceFormState> = ({
             </StyledButton>
           </div>
         ))}
+      {type === 'services' && (
+        <StyledButton type="button" onClick={setCartServiceHandler}>
+          Выбрать услугу
+        </StyledButton>
+      )}
     </div>
   );
 };

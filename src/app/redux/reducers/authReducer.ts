@@ -58,7 +58,6 @@ export const setLogin =
   async (dispatch): Promise<void> => {
     dispatch(setError(''));
     const stateUser = await login(user);
-    console.log(stateUser);
 
     if (typeof stateUser === 'string') {
       dispatch(setError(stateUser));
