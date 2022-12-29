@@ -4,4 +4,5 @@ export interface IMaterial {
   consumption: number;
   package: number;
   price: number;
+  services: any[];
 }

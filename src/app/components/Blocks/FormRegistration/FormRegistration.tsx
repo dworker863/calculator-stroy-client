@@ -7,7 +7,7 @@ import { IFormRegistrationValues } from './IFormRegistration';
 import { StyledLabel } from '../../../commonStyles/StyledLabel';
 import { StyledField } from '../../../commonStyles/StyledField';
 import { StyledErrorMessage } from '../../../commonStyles/StyledErrorMessage';
-import { StyledButton } from '../../../commonStyles/StyledButton';
+import { StyledButton } from '../../Elements/Button/StyledButton';
 
 const FormRegistration: FC = () => {
   const dispatch = useAppDispatch();

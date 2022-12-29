@@ -7,7 +7,7 @@ import { setLogin } from '../../../redux/reducers/authReducer';
 import { StyledField } from '../../../commonStyles/StyledField';
 import { StyledLabel } from '../../../commonStyles/StyledLabel';
 import { StyledErrorMessage } from '../../../commonStyles/StyledErrorMessage';
-import { StyledButton } from '../../../commonStyles/StyledButton';
+import Button from '../../Elements/Button/Button';
 
 const FormAuth: FC = () => {
   const dispatch = useAppDispatch();
@@ -45,8 +45,7 @@ const FormAuth: FC = () => {
           {(msg) => <StyledErrorMessage>{msg}</StyledErrorMessage>}
         </ErrorMessage>
 
-        <StyledButton type="submit">Войти</StyledButton>
-        {/* <button type="submit">Войти</button> */}
+        <Button type="submit" text="Войти" />
       </Form>
     </Formik>
   );

@@ -131,6 +131,7 @@ export const patchMaterial = (id: number | undefined, material: IMaterial) => {
 };
 
 export const deleteMaterial = (id: number | undefined) => {
+  console.log(111);
   return instance
     .delete(`materials/${id}`, {
       headers: {

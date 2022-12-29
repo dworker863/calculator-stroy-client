@@ -1,4 +1,4 @@
-import { IMaterial } from '../../commonInterfaces/IMaterial';
+import { IMaterial } from '../../../commonInterfaces/IMaterial';
 
 export interface IMaterialState {
   material: IMaterial | any;

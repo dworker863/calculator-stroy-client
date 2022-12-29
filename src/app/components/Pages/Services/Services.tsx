@@ -23,11 +23,6 @@ const Services: FC = () => {
 
   return (
     <div>
-      <AdminInstanceForm
-        isAdmin={isAdmin}
-        instances={services}
-        type="services"
-      />
       {isAdmin && (
         <AdminInstanceForm
           isAdmin={isAdmin}
@@ -35,6 +30,11 @@ const Services: FC = () => {
           type="materials"
         />
       )}
+      <AdminInstanceForm
+        isAdmin={isAdmin}
+        instances={services}
+        type="services"
+      />
 
       {!isAdmin && <Cart />}
       {serviceError && <div>{serviceError}</div>}

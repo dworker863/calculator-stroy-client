@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyledButton } from '../../../commonStyles/StyledButton';
+import { StyledButton } from '../../Elements/Button/StyledButton';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { removeCartService, setSum } from '../../../redux/reducers/cartReducer';
 import FormUserService from '../FormUserService/FormUserService';

@@ -1,15 +1,19 @@
 import React, { ChangeEvent, FC, useEffect, useState } from 'react';
-import { StyledButton } from '../../../commonStyles/StyledButton';
 import { StyledSelect } from '../../../commonStyles/StyledSelect';
 import { useAppDispatch } from '../../../hooks';
 import { setCartService, setSum } from '../../../redux/reducers/cartReducer';
 import {
+  removeMaterial,
+  setMaterialsError,
+} from '../../../redux/reducers/materialsReducer';
+import {
   removeService,
   setServicesError,
 } from '../../../redux/reducers/servicesReducer';
-import FormMaterial from '../../FormMaterial/FormMaterial';
+import FormMaterial from '../FormMaterial/FormMaterial';
 import FormService from '../FormService/FormService';
 import { IAdminInstanceFormState } from './IAdminInstanceForm';
+import Button from '../../Elements/Button/Button';
 
 const AdminInstanceForm: FC<IAdminInstanceFormState> = ({
   type,
@@ -35,16 +39,27 @@ const AdminInstanceForm: FC<IAdminInstanceFormState> = ({
   };
 
   const addInstanceHandler = () => {
-    setShowForm('');
+    if (type === 'services') {
+      setShowForm('');
+      dispatch(setServicesError(''));
+    } else {
+      setShowForm('');
+      dispatch(setMaterialsError(''));
+    }
   };
 
   const changeInstanceHandler = () => {
     setShowForm(instanceName);
   };
 
-  const deleteServiceHandler = (id: number | undefined) => {
-    dispatch(removeService(id));
-    dispatch(setServicesError(''));
+  const deleteInstanceHandler = (id: number | undefined) => {
+    if (type === 'services') {
+      dispatch(removeService(id));
+      dispatch(setServicesError(''));
+    } else {
+      dispatch(removeMaterial(id));
+      dispatch(setMaterialsError(''));
+    }
   };
 
   const hideFormHandler = () => {
@@ -62,8 +77,6 @@ const AdminInstanceForm: FC<IAdminInstanceFormState> = ({
     dispatch(setSum());
   };
 
-  console.log(instances[0]);
-
   return (
     <div>
       {instances.length > 0 && (
@@ -79,29 +92,34 @@ const AdminInstanceForm: FC<IAdminInstanceFormState> = ({
           </StyledSelect>
           {isAdmin && (
             <div>
-              <StyledButton type="button" onClick={changeInstanceHandler}>
-                Изменить
-              </StyledButton>
-              <StyledButton
+              <Button
                 type="button"
+                text="Изменить"
+                onClick={changeInstanceHandler}
+                inline
+              />
+              <Button
+                type="button"
+                text="Удалить"
                 onClick={() =>
-                  deleteServiceHandler(
+                  deleteInstanceHandler(
                     instances.filter(
                       (instance) => instance.name === instanceName,
                     )[0].id,
                   )
                 }
-              >
-                Удалить
-              </StyledButton>
+                inline
+              />
             </div>
           )}
         </div>
       )}
       {isAdmin && (
-        <StyledButton type="button" onClick={addInstanceHandler}>
-          {type === 'services' ? 'Добавить Услугу' : 'Добавить Материал'}
-        </StyledButton>
+        <Button
+          type="button"
+          text={type === 'services' ? 'Добавить Услугу' : 'Добавить Материал'}
+          onClick={addInstanceHandler}
+        />
       )}
       {showForm !== null &&
         (type === 'services' ? (
@@ -112,9 +130,7 @@ const AdminInstanceForm: FC<IAdminInstanceFormState> = ({
               }
               hideFormHandler={hideFormHandler}
             />
-            <StyledButton type="button" onClick={hideFormHandler}>
-              Отмена
-            </StyledButton>
+            <Button type="button" text="Отмена" onClick={hideFormHandler} />
           </div>
         ) : (
           <div>
@@ -124,15 +140,15 @@ const AdminInstanceForm: FC<IAdminInstanceFormState> = ({
               }
               hideFormHandler={hideFormHandler}
             />
-            <StyledButton type="button" onClick={hideFormHandler}>
-              Отмена
-            </StyledButton>
+            <Button type="button" text="Отмена" onClick={hideFormHandler} />
           </div>
         ))}
-      {type === 'services' && (
-        <StyledButton type="button" onClick={setCartServiceHandler}>
-          Выбрать услугу
-        </StyledButton>
+      {!isAdmin && type === 'services' && instances.length > 0 && (
+        <Button
+          type="button"
+          text="Выбрать услугу"
+          onClick={setCartServiceHandler}
+        />
       )}
     </div>
   );
