@@ -42,7 +42,14 @@ const FormService: FC<IFormServiceState> = ({ service, hideFormHandler }) => {
         measure: Yup.string().required(
           'Укажите меру за которую выставлена цена',
         ),
-        materials: Yup.array().of(Yup.number()).nullable(),
+        materials: Yup.array()
+          .of(Yup.number())
+          .nullable()
+          .test(
+            'unique',
+            'Материалы не должны повторяться',
+            (values) => new Set(values).size === values?.length,
+          ),
         price: Yup.number().required('Укажите цену'),
       })}
       onSubmit={(values: IService, { setSubmitting }: FormikHelpers<any>) => {
@@ -95,23 +102,20 @@ const FormService: FC<IFormServiceState> = ({ service, hideFormHandler }) => {
                           </option>
                         ))}
                       </StyledField>
-                      <ErrorMessage name={`materials.${index}`}>
-                        {(msg) => (
-                          <StyledErrorMessage>{msg}</StyledErrorMessage>
-                        )}
-                      </ErrorMessage>
                       <Button
                         type="button"
                         text="X"
                         onClick={() => {
                           remove(index);
                         }}
+                        inline
                       />
                       <Button
                         type="button"
                         text="Добавить материал"
                         onClick={() => {
                           console.log(values.materials);
+                          console.log(value);
                           push(value);
                         }}
                       />
@@ -131,6 +135,9 @@ const FormService: FC<IFormServiceState> = ({ service, hideFormHandler }) => {
               </div>
             )}
           </FieldArray>
+          <ErrorMessage name="materials">
+            {(msg) => <StyledErrorMessage>{msg}</StyledErrorMessage>}
+          </ErrorMessage>
 
           <StyledLabel htmlFor="price">Цена</StyledLabel>
           <StyledField id="price" type="text" name="price" />
