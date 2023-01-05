@@ -1,6 +1,7 @@
-import React, { FC } from 'react';
+import React, { ChangeEvent, FC, useState } from 'react';
 import { IFormUserServiceState } from './IFormUserService';
 import {
+  StyledSize,
   StyledUserServiceMaterial,
   StyledUserServiceMaterialCell,
   StyledUserServiceTable,
@@ -10,6 +11,19 @@ import {
 } from './StyledUserService';
 
 const FormUserService: FC<IFormUserServiceState> = ({ service }) => {
+  const [size, setSize] = useState(0);
+
+  const sizeFieldHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    setSize(+e.target.value);
+  };
+
+  const getMaterialPrice = (
+    consumption: number,
+    size: number,
+    materialPackage: number,
+    price: number,
+  ) => ((consumption * size) / materialPackage) * price;
+
   return (
     <StyledUserServiceTable>
       <StyledUserServiceTr>
@@ -27,13 +41,6 @@ const FormUserService: FC<IFormUserServiceState> = ({ service }) => {
         <StyledUserServiceTd>{service.name}</StyledUserServiceTd>
         <StyledUserServiceTd>
           {service.materials?.map((material, index) => (
-            <StyledUserServiceMaterialCell key={material.name + index}>
-              {material.package}
-            </StyledUserServiceMaterialCell>
-          ))}
-        </StyledUserServiceTd>
-        <StyledUserServiceTd>
-          {service.materials?.map((material, index) => (
             <StyledUserServiceMaterial key={material.name + index}>
               {material.name}
             </StyledUserServiceMaterial>
@@ -46,7 +53,16 @@ const FormUserService: FC<IFormUserServiceState> = ({ service }) => {
             </StyledUserServiceMaterialCell>
           ))}
         </StyledUserServiceTd>
-        <StyledUserServiceTd></StyledUserServiceTd>
+        <StyledUserServiceTd>
+          {service.materials?.map((material, index) => (
+            <StyledUserServiceMaterialCell key={material.name + index}>
+              {material.package}
+            </StyledUserServiceMaterialCell>
+          ))}
+        </StyledUserServiceTd>
+        <StyledUserServiceTd>
+          <StyledSize type="text" onChange={sizeFieldHandler} />
+        </StyledUserServiceTd>
         <StyledUserServiceTd>
           {service.materials?.map((material, index) => (
             <StyledUserServiceMaterialCell key={material.name + index}>
@@ -54,11 +70,33 @@ const FormUserService: FC<IFormUserServiceState> = ({ service }) => {
             </StyledUserServiceMaterialCell>
           ))}
         </StyledUserServiceTd>
-        <StyledUserServiceTd>{service.price}</StyledUserServiceTd>
-        <StyledUserServiceTd></StyledUserServiceTd>
-        <StyledUserServiceTd></StyledUserServiceTd>
+        <StyledUserServiceTd>
+          {service.materials?.map((material, index) => (
+            <StyledUserServiceMaterialCell key={material.name + index}>
+              {getMaterialPrice(
+                material.consumption,
+                size,
+                material.package,
+                material.price,
+              )}
+            </StyledUserServiceMaterialCell>
+          ))}
+        </StyledUserServiceTd>
+        <StyledUserServiceTd>{service.price * size}</StyledUserServiceTd>
+        <StyledUserServiceTd>
+          {service.materials?.reduce(
+            (sum, material) =>
+              (sum += getMaterialPrice(
+                material.consumption,
+                size,
+                material.package,
+                material.price,
+              )),
+            0,
+          ) +
+            service.price * size}
+        </StyledUserServiceTd>
       </StyledUserServiceTr>
-      <StyledUserServiceTr></StyledUserServiceTr>
     </StyledUserServiceTable>
   );
 };

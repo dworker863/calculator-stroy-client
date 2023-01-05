@@ -34,7 +34,6 @@ const FormService: FC<IFormServiceState> = ({ service, hideFormHandler }) => {
               (material: IMaterial, index: number) => material.id,
             )) ||
           [],
-        // (materials.length > 0 ? [materials[0].id] : []),
         price: service?.price || 0,
       }}
       validationSchema={Yup.object({

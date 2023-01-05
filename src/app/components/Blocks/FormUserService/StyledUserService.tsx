@@ -34,3 +34,10 @@ export const StyledUserServiceMaterialCell = styled.div`
   margin-bottom: 10px;
   padding: 5px 30px;
 `;
+
+export const StyledSize = styled.input`
+  padding: 10px;
+  border-radius: 5px;
+  text-align: center;
+  background-color: #e8eaed;
+`;
